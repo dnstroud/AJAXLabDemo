@@ -1,4 +1,5 @@
 let stationsList = [];
+let reqWeather = null;
 
 function processXML(xmlDoc) {
     let stationsXML = xmlDoc.getElementsByTagName("station");
@@ -49,7 +50,7 @@ function isSameState(obj)
 
 function getStation(stationid) {
     let returnStation = null;
-    returnStation = stationList.find(function (o) { return o.stationid = stationid });
+    returnStation = stationsList.find(function (o) { return o.stationid = stationid });
     return (returnStation);
 }
 
@@ -72,6 +73,11 @@ function displayStationsList(stationsList, divAttach) {
 
 function createTableHeader(tblArg) {
     let hdrRow = tblArg.insertRow();
+
+    let cellSelect = hdrRow.insertCell();
+    // cellSelect.appendChild(inButtonSelect);
+    hdrRow.appendChild(cellSelect);
+
     let cellStationId = hdrRow.insertCell();
     cellStationId.appendChild(document.createTextNode("Station Id"));
     hdrRow.appendChild(cellStationId)
@@ -81,9 +87,50 @@ function createTableHeader(tblArg) {
     hdrRow.appendChild(cellStationName);
 
 }
+function btnSelectStation(eventArg) {
+    let currentElement = event.currentTarget;
+    let stationName = currentElement.value;
+    let currentStation = getStation(stationName);
+
+    // now get the weather url.
+    let weatherURL = currentStation.xmlURL;
+
+    reqWeather = new XMLHttpRequest();
+
+    reqWeather.open("GET", weatherURL, true);
+    reqWeather.setRequestHeader("Accept",
+        "*/*");
+    reqWeather.onreadystatechange = getWeatherByStationCallback;
+    reqWeather.send();
+
+    // NOW LETS HAVE SOME FUN. DISPLAY THE WEATHER PAGE.
+    // window.open("weatherURL",_self)
+    // NOW MAKE THE 2ND REQUEST.
+}
+
+function getWeatherByStationCallback() {
+    if (this.readyState == 4 && this.status == 200) {
+
+        let MyText = reqWeather.responseText;
+        let MyXML = reqWeather.responseXML;
+
+        //processXML(MyXML);
+
+        spnGetStationsStatus.innerHTML = "Weather is loaded."
+    }
+}
+
 
 function createTableRow(tblArg, stationIdArg, stationNameArg, stationStateArg) {
     let curRow = tblArg.insertRow();
+
+    let inButtonSelect = document.createElement("input");
+    inButtonSelect.setAttribute("type", "button");
+    inButtonSelect.setAttribute("value", stationIdArg);
+    inButtonSelect.addEventListener('click', btnSelectStation);
+
+    let cellSelect = curRow.insertCell();
+    cellSelect.appendChild(inButtonSelect);
 
     let cellStationId = curRow.insertCell();
     cellStationId.appendChild(document.createTextNode(stationIdArg));
@@ -99,6 +146,8 @@ function createTableRow(tblArg, stationIdArg, stationNameArg, stationStateArg) {
 }
 
 function displayStationTable(stationsList, divAttach) {
+    removeAllChildren(divAttach);
+
     let uTable = document.createElement("table");
     createTableHeader(uTable);
     divAttach.appendChild(uTable);
@@ -111,4 +160,4 @@ function displayStationTable(stationsList, divAttach) {
     }
 }
 
-// 50 60 70 80 90 100
+// 50 100 110 120 130 140

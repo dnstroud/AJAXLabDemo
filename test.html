@@ -95,7 +95,7 @@
             let z = s;
 
 
-            var base_uri = "https://w1.weather.gov/xml/current_obs/index.xml";
+            var base_uri = "https://weather.gov/xml/current_obs/CWAV.xml";
 
             // Here, the request is created. Constructor is called.
             req = new XMLHttpRequest();
@@ -107,8 +107,14 @@
             // headers that tell the service the kinds of data we are willing to accept.
             // These values are well - known MIME types. Here, we are saying that XML will be
             // accepted from the Web Service.
-            req.setRequestHeader("Accept", "text / html, application / xhtml + xml, application / xml; q = 0.9,*/*;q=0.8");
 
+            req.setRequestHeader("Accept", "application/xml");
+            req.setRequestHeader("User-Agent", "PostmanRuntime/7.290");
+            //req.setRequestHeader("Accept", "text / html, application / xhtml + xml, application / xml; q = 0.9,*/*;q=0.8");
+            req.setRequestHeader("Access-Control-Allow-Origin", "*");
+            req.setRequestHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+            req.setRequestHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, Authorization, Strict-Transport-Security");
+            req.setRequestHeader("Referrer-Policy", "no-referrer");
             req.onreadystatechange = getStationsCallback;
 
             // Send the request

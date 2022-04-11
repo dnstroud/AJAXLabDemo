@@ -5,13 +5,18 @@
     <meta charset="utf-8" />
     <title></title>
     <script src="./js/WeatherLib.js"></script>
+    <script src="./js/NodeUtilLib.js"></script>
+
     <script>
         let selStates = null;
         let divStationsPlaceholder = null;
+        let spnGetStationsStatus = null;
 
         function bodyOnLoad() {
             selstates = document.getElementById("selStates");
             divStationsPlaceholder = document.getElementById("divStationsPlaceholder");
+            spnGetStationsStatus = document.getElementById("spnGetStationsStatus");
+            spnGetStationsStatus.innerHTML = "Stations not loaded."
         }
 
         function btnNWSGetStationsAsync_Click() {
@@ -32,6 +37,7 @@
                 let MyXML = req.responseXML;
 
                 processXML(MyXML);
+                spnGetStationsStatus.innerHTML = "Stations are loaded."
             }
         }
 
@@ -42,8 +48,8 @@
             let myList = getStations(stateAbbr);
             //let myList = getStations2(stateAbbr);
 
-            displayStationsList(myList, divStationsPlaceholder);
-            //displayStationTable(myList, divStationsPlaceholder);
+            //displayStationsList(myList, divStationsPlaceholder);
+            displayStationTable(myList, divStationsPlaceholder);
         }
     </script>
 </head>
@@ -105,11 +111,13 @@
 
     <input type="button" onclick="btnNWSGetStationsAsync_Click()"
            value="Get Stations - XML - Sync" />
-
+    <span id="spnGetStationsStatus"></span>
     <br /><br />
     <h1>Station List</h1>
     <div id="divStationsPlaceholder"></div>
+
+    <div id="divWeatherPlaceholder"></div>
 </body>
 </html>
 
-<!-- 100 110 -->
+<!-- 100 110 120 -->
