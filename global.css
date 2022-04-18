@@ -1,0 +1,17 @@
+﻿body {
+    background-color: white;
+    font-family: Calibri;
+    width: 1024px;
+}
+
+h1 {
+    color: darkblue;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid;
+}
