@@ -75,20 +75,32 @@ function createTableHeader(tblArg) {
     let hdrRow = tblArg.insertRow();
 
     let cellSelect = hdrRow.insertCell();
-    // cellSelect.appendChild(inButtonSelect);
+    //cellSelect.appendChild(inButtonSelect);
     hdrRow.appendChild(cellSelect);
 
     let cellStationId = hdrRow.insertCell();
-    cellStationId.appendChild(document.createTextNode("Station Id"));
+    cellStationId.appendChild(document.createTextNode("ID"));
     hdrRow.appendChild(cellStationId)
 
     let cellStationName = hdrRow.insertCell();
     cellStationName.appendChild(document.createTextNode("Station Name"));
     hdrRow.appendChild(cellStationName);
 
+    let cellStationState = hdrRow.insertCell();
+    cellStationState.appendChild(document.createTextNode("State"));
+    hdrRow.appendChild(cellStationState);
+
+    let cellStationLat = hdrRow.insertCell();
+    cellStationLat.appendChild(document.createTextNode("Latitude"));
+    hdrRow.appendChild(cellStationLat);
+
+    let cellStationLong = hdrRow.insertCell();
+    cellStationLong.appendChild(document.createTextNode("Longitude"));
+    hdrRow.appendChild(cellStationLong);
 }
+
 function btnSelectStation(eventArg) {
-    let currentElement = event.currentTarget;
+    let currentElement = eventArg.currentTarget;
     let stationName = currentElement.value;
     let currentStation = getStation(stationName);
 
@@ -120,13 +132,12 @@ function getWeatherByStationCallback() {
     }
 }
 
-
-function createTableRow(tblArg, stationIdArg, stationNameArg, stationStateArg) {
+function createTableRow(tblArg, stationIdArg, stationNameArg, stationStateArg, stationLatArg, stationLongArg) {
     let curRow = tblArg.insertRow();
-
     let inButtonSelect = document.createElement("input");
     inButtonSelect.setAttribute("type", "button");
     inButtonSelect.setAttribute("value", stationIdArg);
+
     inButtonSelect.addEventListener('click', btnSelectStation);
 
     let cellSelect = curRow.insertCell();
@@ -143,6 +154,14 @@ function createTableRow(tblArg, stationIdArg, stationNameArg, stationStateArg) {
     let cellStationState = curRow.insertCell();
     cellStationState.appendChild(document.createTextNode(stationStateArg));
     curRow.appendChild(cellStationState);
+
+    let cellStationLat = curRow.insertCell();
+    cellStationLat.appendChild(document.createTextNode(stationLatArg));
+    curRow.appendChild(cellStationLat);
+
+    let cellStationLong = curRow.insertCell();
+    cellStationLong.appendChild(document.createTextNode(stationLongArg));
+    curRow.appendChild(cellStationLong);
 }
 
 function displayStationTable(stationsList, divAttach) {
@@ -156,7 +175,9 @@ function displayStationTable(stationsList, divAttach) {
         createTableRow(uTable,
             stationsList[x].stationid,
             stationsList[x].stationName,
-            stationsList[x].state);
+            stationsList[x].state,
+            stationsList[x].latitude,
+            stationsList[x].longitude);
     }
 }
 
