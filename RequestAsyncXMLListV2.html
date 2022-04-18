@@ -4,10 +4,13 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <link id="currentStyle" href="./css/global.css" rel="stylesheet" />
+
     <script src="./js/WeatherLib.js"></script>
     <script src="./js/NodeUtilLib.js"></script>
 
     <script>
+
         let selStates = null;
         let divStationsPlaceholder = null;
         let spnGetStationsStatus = null;
@@ -54,6 +57,7 @@
     </script>
 </head>
 
+
 <body onload="bodyOnLoad()">
     <h1>Get Weather Stations</h1>
     <select id="selStates" onchange="selStates_onChange()">
@@ -92,7 +96,7 @@
         <option value="NC">North Carolina</option>
         <option value="ND">North Dakota</option>
         <option value="OH">Ohio</option>
-        <option value="OK">Oaklahoma</option>
+        <option value="OK">Oklahoma</option>
         <option value="OR">Oregon</option>
         <option value="PA">Pennsylvania</option>
         <option value="RI">Rhode Island</option>
